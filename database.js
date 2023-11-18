@@ -1,7 +1,6 @@
+import { openDatabase } from "expo-sqlite";
 
-import { openDatabase } from 'expo-sqlite';
-
-const db = openDatabase('PetsDatabase.db');
+const db = openDatabase("PetsDatabase.db");
 
 export const initDatabase = () => {
   db.transaction(tx => {
@@ -14,12 +13,12 @@ export const initDatabase = () => {
   });
 };
 
-export const addPet = (name, birthday, breed, favToy) => {
+export const addPet = (avatar, name, birthday, breed, favToy) => {
   return new Promise((resolve, reject) => {
-    db.transaction(tx => {
+    db.transaction((tx) => {
       tx.executeSql(
-        'INSERT INTO pets (name, birthday, breed, favToy) VALUES (?, ?, ?, ?);',
-        [name, birthday, breed, favToy],
+        "INSERT INTO pets (avatar, name, birthday, breed, favToy) VALUES (?, ?, ?, ?, ?);",
+        [avatar, name, birthday, breed, favToy],
         (_, results) => {
           resolve(results.insertId);
         },
@@ -32,46 +31,49 @@ export const addPet = (name, birthday, breed, favToy) => {
 };
 
 export const getPets = () => {
-    return new Promise((resolve, reject) => {
-      db.transaction(tx => {
-        tx.executeSql(
-          'SELECT * FROM pets;',
-          [],
-          (_, results) => {
-            const pets = results.rows._array; // Convert results to array
-            resolve(pets);
-          },
-          (_, error) => {
-            reject(error);
-          }
-        );
-      });
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM pets;",
+        [],
+        (_, results) => {
+          const pets = results.rows._array; // Convert results to array
+          resolve(pets);
+        },
+        (_, error) => {
+          reject(error);
+        }
+      );
     });
-  };
+  });
+};
 
-
-  export const removePet = (id) => {
-    return new Promise((resolve, reject) => {
-      db.transaction(tx => {
-        tx.executeSql('DELETE FROM pets WHERE id = ?', [id], (_, result) => {
+export const removePet = (id) => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "DELETE FROM pets WHERE id = ?",
+        [id],
+        (_, result) => {
           // Check if any rows were affected (if a pet with the given ID existed)
           if (result.rowsAffected > 0) {
             resolve(`Pet with ID ${id} removed successfully`);
           } else {
             reject(`Pet with ID ${id} not found`);
           }
-        }, (_, error) => {
+        },
+        (_, error) => {
           reject(error);
-        });
-      });
+        }
+      );
     });
-  };
-  
+  });
+};
 
-  export const clearPets = () => {
-    db.transaction((tx) => {
-      tx.executeSql('DELETE FROM pets;', [], (_, result) => {
-        console.log('Clear btn pressed','Rows affected:', result.rowsAffected);
-      });
+export const clearPets = () => {
+  db.transaction((tx) => {
+    tx.executeSql("DELETE FROM pets;", [], (_, result) => {
+      console.log("Clear btn pressed", "Rows affected:", result.rowsAffected);
     });
-  };
+  });
+};

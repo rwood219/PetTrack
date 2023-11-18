@@ -9,7 +9,6 @@ const PetList = () => {
   useEffect(() => {
     initDatabase();
 
-   
     fetchPets();
   }, []);
 
@@ -17,6 +16,7 @@ const PetList = () => {
     try {
       const petsData = await getPets();
       setPets(petsData);
+      console.log(petsData)
     } catch (error) {
       console.error("Error fetching pets", error);
     }
@@ -27,24 +27,21 @@ const PetList = () => {
     console.log(`Edit button pressed for pet with ID: ${petId}`);
   };
 
- 
-
-
   return (
     <View style={styles.container}>
-      
       <ScrollView>
         {pets.map((pet) => (
           <View key={pet.id} style={styles.petInfo}>
-              <Avatar.Image
-          style={styles.avatar}
-          size={24}
-          source={require("../../assets/avatar-placeholder.jpg")}
-        />
+            <Avatar.Image
+              style={styles.avatar}
+              size={74}
+              source={{ uri: pet.avatar }}
+            />
             <Text>Name: {pet.name}</Text>
             <Text>Birthday: {pet.birthday}</Text>
             <Text>Breed: {pet.breed}</Text>
             <Text>Favorite Toy: {pet.favToy}</Text>
+            <Text>Medication: {pet.meds}</Text>
             <Button
               icon="pencil"
               mode="contained"
@@ -52,12 +49,7 @@ const PetList = () => {
             >
               Edit
             </Button>
-            <IconButton
-              icon="delete"
-              color="red"
-              size={20}
-              onPress={() => handleRemove(pet.id)}
-            />
+          
           </View>
         ))}
       </ScrollView>
@@ -69,11 +61,11 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 0,
     flex: 1,
-    marginBottom: 20,
+    marginBottom: 0,
   },
   petInfo: {
-    margin: 20,
-    backgroundColor: "#e8a166",
+    margin: 10,
+    backgroundColor: "#dec0a4",
     width: 300,
     justifyContent: "center",
     borderRadius: 25,

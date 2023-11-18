@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { View, Modal, StyleSheet, TouchableOpacity, Text } from "react-native";
-import AddPet from "../Components/AddPet";
+import { Button, IconButton, Avatar } from "react-native-paper";
+import dropTable from '../../database.js'
+
 
 
 const styles = StyleSheet.create({
@@ -14,17 +16,19 @@ const styles = StyleSheet.create({
   });
 
 
-  const editPet = (id) => {
-    
-  }
-
+//Fetch Pets in Database
 
 
 const EditPetScreen = () => {
     return (
         <View style={styles.container}>
-          <AddPet />
-        </View>
+        <IconButton
+          icon="delete"
+          color="red"
+          size={20}
+          onPress={() => dropTable()}
+        />
+      </View>
       );
     
 }

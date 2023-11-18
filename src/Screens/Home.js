@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { View, Modal, StyleSheet, TouchableOpacity, Text } from "react-native";
-import AddPet from "../Components/AddPet";
 import { clearPets, initDatabase, getPets } from "../../database";
 import PetList from "../Components/PetList";
 import { Appbar } from "react-native-paper";
@@ -12,7 +11,7 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 0,
     alignItems: 'center',
-    backgroundColor: "#c78b2a",
+    backgroundColor: "#e8a166",
   },
 });
 
