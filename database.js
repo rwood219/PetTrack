@@ -49,10 +49,28 @@ export const getPets = () => {
     });
   };
 
+
+  export const removePet = (id) => {
+    return new Promise((resolve, reject) => {
+      db.transaction(tx => {
+        tx.executeSql('DELETE FROM pets WHERE id = ?', [id], (_, result) => {
+          // Check if any rows were affected (if a pet with the given ID existed)
+          if (result.rowsAffected > 0) {
+            resolve(`Pet with ID ${id} removed successfully`);
+          } else {
+            reject(`Pet with ID ${id} not found`);
+          }
+        }, (_, error) => {
+          reject(error);
+        });
+      });
+    });
+  };
+  
+
   export const clearPets = () => {
     db.transaction((tx) => {
       tx.executeSql('DELETE FROM pets;', [], (_, result) => {
-        
         console.log('Clear btn pressed','Rows affected:', result.rowsAffected);
       });
     });
