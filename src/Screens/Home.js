@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 });
 
 const HomeScreen = ({ navigation }) => {
-    const [pets, setPets] = useState([]);
+   const [pets, setPets] = useState([]);
 
     useEffect(()=>{
       fetchPets()
@@ -40,10 +40,6 @@ const HomeScreen = ({ navigation }) => {
         console.error("Error adding pet", error);
       }
     };
-
-
-
-
 
   return (
     <>

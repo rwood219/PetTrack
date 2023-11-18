@@ -12,7 +12,7 @@ import { Avatar } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
 import { addPet, initDatabase } from "../../database";
 
-const AddPetScreen = () => {
+const AddPetScreen = ({ updatePetList, navigation }) => {
   const [petName, setPetName] = useState("");
   const [petType, setPetType] = useState("");
   const [petBirthday, setPetBirthday] = useState("");
@@ -20,6 +20,7 @@ const AddPetScreen = () => {
   const [avatar, setAvatar] = useState("");
   const [petToy, setPetToy] = useState("");
   const [petMeds, setPetMeds] = useState("");
+  const [refresh, setRefreash] = useState(false)
 
   const handleAddPet = () => {
     initDatabase();
@@ -43,59 +44,56 @@ const AddPetScreen = () => {
       quality: 1,
     });
     console.log(result);
-
     if (!result.canceled) {
       setAvatar(result.assets[0].uri);
     }
   };
 
   return (
-
-    
     <SafeAreaView style={styles.inputContainer}>
-        <ScrollView>
-      <View style={styles.inputContainer}>
-        <Avatar.Image
-          style={styles.avatar}
-          size={24}
-          source={require("../../assets/avatar-placeholder.jpg")}
-        />
-        {avatar && (
-          <Image source={{ uri: avatar }} style={{ width: 200, height: 200 }} />
-        )}
-        <Button title="Pick an image from camera roll" onPress={pickImage} />
+      <ScrollView>
+        <View style={styles.inputContainer}>
+          <Avatar.Image
+            style={styles.avatar}
+            size={24}
+            source={require("../../assets/avatar-placeholder.jpg")}
+          />
+          {avatar && (
+            <Image
+              source={{ uri: avatar }}
+              style={{ width: 200, height: 200 }}
+            />
+          )}
+          <Button title="Pick an image from camera roll" onPress={pickImage} />
 
-        <TextInput
-          style={styles.input}
-          placeholder="Pet Name"
-          value={petName}
-          onChangeText={(text) => setPetName(text)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Pet Birthday"
-          value={petBirthday}
-          onChangeText={(text) => setPetBirthday(text)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Pet Type"
-          value={petType}
-          onChangeText={(text) => setPetType(text)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Pet Medication"
-          value={petMeds}
-          onChangeText={(text) => setPetMeds(text)}
-        />
-        <Button style={styles.button} title="Add" onPress={handleAddPet} />
-      </View>
+          <TextInput
+            style={styles.input}
+            placeholder="Pet Name"
+            value={petName}
+            onChangeText={(text) => setPetName(text)}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Pet Birthday"
+            value={petBirthday}
+            onChangeText={(text) => setPetBirthday(text)}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Pet Type"
+            value={petType}
+            onChangeText={(text) => setPetType(text)}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Pet Medication"
+            value={petMeds}
+            onChangeText={(text) => setPetMeds(text)}
+          />
+          <Button style={styles.button} title="Add" onPress={handleAddPet} />
+        </View>
       </ScrollView>
     </SafeAreaView>
-
-    
-
   );
 };
 

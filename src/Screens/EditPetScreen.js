@@ -14,13 +14,17 @@ const styles = StyleSheet.create({
 });
 
 //Fetch Pets in Database
-const handleEdit = () => {
+const handleEdit = (id) => {
     removePet()
 };
 
-const EditPetScreen = () => {
+const EditPetScreen = ({ route }) => {
+const { petId } = route.params;
+
+
   return (
     <View style={styles.container}>
+        <Text>Edit Pet Screen for Pet ID: {petId}</Text>
       <IconButton
         icon="delete"
         color="red"
@@ -31,4 +35,8 @@ const EditPetScreen = () => {
   );
 };
 
+EditPetScreen.options = {
+    title: 'Edit Pet', // Set the title for the header
+  };
+  
 export default EditPetScreen;
