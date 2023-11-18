@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Button, IconButton } from 'react-native-paper';
 import { getPets, removePet, initDatabase } from '../../database'; 
 
@@ -37,8 +37,12 @@ const PetList = ({ navigation }) => {
   };
 
   return (
+
+
     <View style={styles.container}>
       <Text>Pet List</Text>
+
+<ScrollView>
       {pets.map((pet) => (
         <View key={pet.id} style={styles.petInfo}>
           <Text>Name: {pet.name}</Text>
@@ -60,6 +64,7 @@ const PetList = ({ navigation }) => {
           />
         </View>
       ))}
+      </ScrollView>
     </View>
   );
 };
@@ -76,7 +81,7 @@ const styles = StyleSheet.create({
     width: 300,
     justifyContent: "center",
     borderRadius: 25,
-    padding:20
+    padding:20,
   },
 });
 
