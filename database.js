@@ -49,4 +49,11 @@ export const getPets = () => {
     });
   };
 
-  console.log(getPets())
+  export const clearPets = () => {
+    db.transaction((tx) => {
+      tx.executeSql('DELETE FROM pets;', [], (_, result) => {
+        
+        console.log('Clear btn pressed','Rows affected:', result.rowsAffected);
+      });
+    });
+  };

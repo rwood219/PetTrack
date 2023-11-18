@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useState} from "react";
 import { View, Modal, StyleSheet, TouchableOpacity, Text } from "react-native";
 import AddPet from "../Components/AddPet";
-import { initDatabase } from "../../database";
+import {clearPets, initDatabase } from "../../database";
 import PetList from "../Components/PetProfile";
+
 
 initDatabase();
 
@@ -28,18 +29,41 @@ const styles = StyleSheet.create({
 const HomeScreen = () => {
   const [isAddPetVisible, setAddPetVisible] = React.useState(false);
 
+  
+  const [refreshList, setRefreshList] = useState(false);
+
+  const updateList = () => {
+    setRefreshList((prev) => !prev);
+  };
+
   const showAddPetForm = () => setAddPetVisible(true);
   const hideAddPetForm = () => setAddPetVisible(false);
 
   return (
     <View style={styles.container}>
       {/* Your main content goes here */}
-      <PetList />
-      {/* AddPet button */}
+      <PetList refreshList={refreshList} />
+    
+      <TouchableOpacity
+  style={styles.addButton}
+  onPress={() => {
+    showAddPetForm();
+    setRefreshList(true)
+  }}
+>
+  <Text style={styles.addButtonText}>Add Pet</Text>
+</TouchableOpacity>
 
-      <TouchableOpacity style={styles.addButton} onPress={showAddPetForm}>
-        <Text style={styles.addButtonText}>Add Pet</Text>
-      </TouchableOpacity>
+<TouchableOpacity
+  style={styles.addButton}
+  onPress={() => {
+    clearPets();
+    updateList();
+  }}
+>
+  <Text style={styles.addButtonText}>Remove all pets</Text>
+</TouchableOpacity>
+
 
       {/* AddPet modal */}
       <Modal
