@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import HomeScreen from "./src/Screens/Home";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import EditPet from "./src/Screens/EditPetScreen"
+import EditPetScreen from "./src/Screens/EditPetScreen"
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import AddPetScreen from "./src/Screens/AddPetScreen";
 
@@ -15,7 +15,7 @@ export default function App() {
       <Tab.Navigator>
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="AddPet" component={AddPetScreen} />
-        <Tab.Screen name="Edit" component={EditPet} />
+        <Tab.Screen name="EditPetScreen" component={EditPetScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );

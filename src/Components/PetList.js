@@ -2,15 +2,17 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { Button, IconButton, Avatar } from "react-native-paper";
 import { getPets, removePet, initDatabase } from "../../database";
+import EditPetScreen from "../Screens/EditPetScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-const PetList = () => {
-  const [pets, setPets] = useState([]);
+const PetList = ({ pets, navigation }) => {
+  //const [pets, setPets] = useState([]);
 
   useEffect(() => {
     initDatabase();
-
     fetchPets();
-  }, []);
+  }, [pets]);
 
   const fetchPets = async () => {
     try {
@@ -22,8 +24,8 @@ const PetList = () => {
     }
   };
 
-  const handleEdit = (petId, { navigation }) => {
-    navigation.navigate("EditScreen");
+  const handleEdit = (petId) => {
+    navigation.navigate('EditPetScreen', { petId }); 
     console.log(`Edit button pressed for pet with ID: ${petId}`);
   };
 
@@ -48,8 +50,7 @@ const PetList = () => {
               onPress={() => handleEdit(pet.id)}
             >
               Edit
-            </Button>
-          
+            </Button>        
           </View>
         ))}
       </ScrollView>
